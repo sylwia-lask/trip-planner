@@ -1,5 +1,5 @@
 <template>
-  <span class="country-pin">{{ country }}</span>
+  <b-badge variant="primary" class="country-pin">{{ country }}</b-badge>
 </template>
 
 <script>
@@ -12,6 +12,5 @@ export default {
 <style scoped>
 .country-pin {
   margin: 5px;
-  color: blue;
 }
 </style>

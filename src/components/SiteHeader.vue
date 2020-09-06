@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h1>Trip planer</h1>
-    <h2>The best site in the world</h2>
+    <b-navbar type="dark" variant="info">
+      <b-navbar-brand href="#">Trip Planer</b-navbar-brand>
+    </b-navbar>
   </div>
 </template>
 

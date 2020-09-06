@@ -2,6 +2,7 @@
   <div id="app">
     <site-header></site-header>
     <country-pin v-for="country in countries" :key="country" :country="country"></country-pin>
+    <router-view></router-view>
   </div>
 </template>
 

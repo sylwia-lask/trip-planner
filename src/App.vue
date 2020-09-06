@@ -1,19 +1,24 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <site-header></site-header>
+    <country-pin v-for="country in countries" :key="country" :country="country"></country-pin>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SiteHeader from "./components/SiteHeader";
+import CountryPin from './components/CountryPin';
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    SiteHeader,
+    CountryPin
+  },
+  data: () => ({
+    countries: ["Croatia", "Poland", "Greece"]
+  })
+};
 </script>
 
 <style>

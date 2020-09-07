@@ -13,6 +13,12 @@
         <li v-for="place in trip.seen" :key="place">{{place}}</li>
       </ul>
     </b-card-text>
+    <b-card-text class="rating">
+      Rating:
+      <b-icon icon="patch-minus" class="rating-change" @click="decrement"></b-icon>
+      {{formattedRating}}
+      <b-icon icon="patch-plus" class="rating-change" @click="increment"></b-icon>
+    </b-card-text>
   </b-card>
 </template>
 
@@ -20,6 +26,30 @@
 export default {
   name: "SingleTrip",
   props: ["trip"],
+  data: function () {
+    return {
+      rating: null,
+    };
+  },
+  computed: {
+    formattedRating() {
+      const indicator = () => (this.rating === 1 ? "star" : "stars");
+      return `${this.rating} ${indicator()}`;
+    },
+  },
+  methods: {
+    increment() {
+      this.rating++;
+    },
+    decrement() {
+      if (this.rating) {
+        this.rating--;
+      }
+    },
+  },
+  mounted() {
+    this.rating = this.trip.rating;
+  },
 };
 </script>
 
@@ -28,6 +58,16 @@ export default {
   margin: 0 auto;
 }
 .card-img-top {
-    max-height: 180px;
+  max-height: 180px;
+}
+.rating {
+  position: absolute;
+  bottom: 0;
+}
+.rating-change {
+  cursor: pointer;
+}
+.rating-change:hover {
+  color: red;
 }
 </style>

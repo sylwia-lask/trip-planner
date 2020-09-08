@@ -8,6 +8,7 @@
     style="max-width: 20rem; "
     class="mb-5 centered"
   >
+    <b-form-checkbox :id="trip.id.toString()" v-model="checked" :name="trip.id.toString()" value="checked" class="checkbox" @change="$emit('selection-changed', trip.id)">Check</b-form-checkbox>
     <b-card-text>
       <ul>
         <li v-for="place in trip.seen" :key="place">{{place}}</li>
@@ -29,6 +30,7 @@ export default {
   data: function () {
     return {
       rating: null,
+      checked: false,
     };
   },
   computed: {
@@ -69,5 +71,8 @@ export default {
 }
 .rating-change:hover {
   color: red;
+}
+.checkbox {
+    margin: 5px;
 }
 </style>

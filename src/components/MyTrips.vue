@@ -4,7 +4,9 @@
     <div v-if="selectedTrips.length">
       <h3>Selected trips:</h3>
       <country-pin v-for="trip in selectedTrips" :key="trip.id" :country="trip.country"></country-pin>
-      <b-button variant="danger" @click="deleteSelected"><b-icon icon="x"></b-icon>Delete selected</b-button>
+      <b-button variant="danger" @click="deleteSelected">
+        <b-icon icon="x"></b-icon>Delete selected
+      </b-button>
     </div>
     <h3 v-else>No trips selected</h3>
     <div class="row">
@@ -27,10 +29,12 @@ import CountryPin from "./CountryPin";
 export default {
   name: "MyTrips",
   components: { SingleTrip, CountryPin },
-  data: () => ({
-    trips: [],
-    selectedTrips: [],
-  }),
+  data() {
+    return {
+      trips: [],
+      selectedTrips: []
+    };
+  },
   methods: {
     addToSelectedTrips(id) {
       if (this.selectedTrips.some((i) => i.id === id)) {
@@ -41,9 +45,11 @@ export default {
       }
     },
     deleteSelected() {
-        this.trips = this.trips.filter(i => !this.selectedTrips.some(el => el.id === i.id));
-        this.selectedTrips = [];
-    }
+      this.trips = this.trips.filter(
+        (i) => !this.selectedTrips.some((el) => el.id === i.id)
+      );
+      this.selectedTrips = [];
+    },
   },
   mounted() {
     this.trips = myTrips;

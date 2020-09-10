@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import { myTrips } from "../data";
+import {mapGetters, mapMutations} from 'vuex';
+
 export default {
   name: "addTrip",
   data() {
@@ -37,14 +38,18 @@ export default {
       seenInput: "",
     };
   },
+  computed: {
+    ...mapGetters(['trips'])
+  },
   methods: {
+    ...mapMutations(['addTrip']),
     addToSeen() {
       this.seen.push(this.seenInput);
       this.seenInput = "";
     },
     saveTrip() {
       const trip = {
-        id: myTrips.length,
+        id: this.trips.length + 1,
         country: this.country,
         date: this.date,
         seen: this.seen,
@@ -52,9 +57,7 @@ export default {
         rating: Number(this.rating),
       };
 
-      console.log(trip);
-
-      myTrips.push(trip);
+      this.addTrip(trip);
       this.$router.push("../my-trips");
     },
   },

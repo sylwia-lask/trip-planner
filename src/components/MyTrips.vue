@@ -4,7 +4,7 @@
     <div v-if="selectedTrips.length">
       <h3>Selected trips:</h3>
       <country-pin v-for="trip in selectedTrips" :key="trip.id" :country="trip.country"></country-pin>
-      <b-button variant="danger" @click="deleteSelected">
+      <b-button variant="danger" @click="deleteSelectedTrips">
         <b-icon icon="x"></b-icon>Delete selected
       </b-button>
     </div>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 import { myTrips } from "../data";
 import SingleTrip from "./SingleTrip";
 import CountryPin from "./CountryPin";
@@ -29,30 +31,14 @@ import CountryPin from "./CountryPin";
 export default {
   name: "MyTrips",
   components: { SingleTrip, CountryPin },
-  data() {
-    return {
-      trips: [],
-      selectedTrips: []
-    };
-  },
   methods: {
-    addToSelectedTrips(id) {
-      if (this.selectedTrips.some((i) => i.id === id)) {
-        this.selectedTrips = this.selectedTrips.filter((i) => i.id !== id);
-      } else {
-        const changedTrip = this.trips.filter((i) => i.id === id)[0];
-        this.selectedTrips.push(changedTrip);
-      }
-    },
-    deleteSelected() {
-      this.trips = this.trips.filter(
-        (i) => !this.selectedTrips.some((el) => el.id === i.id)
-      );
-      this.selectedTrips = [];
-    },
+    ...mapMutations(["addToSelectedTrips", "deleteSelectedTrips"])
+  },
+  computed: {
+    ...mapGetters(["trips", "selectedTrips"]),
   },
   mounted() {
-    this.trips = myTrips;
+    this.$store.commit("loadTrips", myTrips);
   },
 };
 </script>

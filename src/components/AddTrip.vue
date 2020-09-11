@@ -3,6 +3,7 @@
     <h2 class="ml-5 mt-2">Add Trip</h2>
     <form class="m-5" @submit.prevent="saveTrip">
       <b-form-input v-model="country" placeholder="Enter country" required></b-form-input>
+      <b-form-input v-model="cityOfResidence" placeholder="Enter city of residence" class="mt-2" required></b-form-input>
       <label for="trip-date" class="mt-3">Choose a date</label>
       <b-form-datepicker
         id="trip-date"
@@ -11,10 +12,10 @@
         :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
         required
       ></b-form-datepicker>
-      <b-form-input v-model="seenInput" placeholder="Enter seen item"></b-form-input>
-      <b-button variant="success" class="mt-1" @click="addToSeen">Add to seen things</b-button>
+      <b-form-input v-model="thingsToSeeInput" placeholder="Enter thingsToSee item"></b-form-input>
+      <b-button variant="success" class="mt-1" @click="addToThingsToSee">Add things to see</b-button>
       <ul>
-        <li v-for="item in seen" :key="item">{{item}}</li>
+        <li v-for="item in thingsToSee" :key="item">{{item}}</li>
       </ul>
       <b-form-input v-model="photoLink" placeholder="Enter photo url" class="mt-3" required></b-form-input>
       <b-form-input v-model="rating" placeholder="Rating" type="number" class="mt-3" required></b-form-input>
@@ -31,11 +32,12 @@ export default {
   data() {
     return {
       country: "",
+      cityOfResidence: '',
       date: "",
-      seen: [],
+      thingsToSee: [],
       photoLink: "",
       rating: null,
-      seenInput: "",
+      thingsToSeeInput: "",
     };
   },
   computed: {
@@ -43,16 +45,16 @@ export default {
   },
   methods: {
     ...mapMutations(['addTrip']),
-    addToSeen() {
-      this.seen.push(this.seenInput);
-      this.seenInput = "";
+    addToThingsToSee() {
+      this.thingsToSee.push(this.thingsToSeeInput);
+      this.thingsToSeeInput = "";
     },
     saveTrip() {
       const trip = {
         id: this.trips.length + 1,
         country: this.country,
         date: this.date,
-        seen: this.seen,
+        thingsToSee: this.thingsToSee,
         photoLink: this.photoLink,
         rating: Number(this.rating),
       };

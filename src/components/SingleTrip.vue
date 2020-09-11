@@ -1,6 +1,6 @@
 <template>
   <b-card
-    :title="trip.country"
+    :title="formattedTitle"
     :img-src="trip.photoLink"
     img-alt="Image"
     img-top
@@ -11,7 +11,7 @@
     <b-form-checkbox :id="trip.id.toString()" v-model="checked" :name="trip.id.toString()" value="checked" class="checkbox" @change="$emit('selection-changed', trip.id)">Check</b-form-checkbox>
     <b-card-text>
       <ul>
-        <li v-for="place in trip.seen" :key="place">{{place}}</li>
+        <li v-for="place in trip.thingsToSee" :key="place">{{place}}</li>
       </ul>
     </b-card-text>
     <b-card-text class="rating">
@@ -29,8 +29,9 @@ export default {
   props: ["trip"],
   data: function () {
     return {
-      rating: null,
+      rating: this.trip.rating,
       checked: false,
+      cityOfResidence: this.trip.cityOfResidence
     };
   },
   computed: {
@@ -38,6 +39,13 @@ export default {
       const indicator = () => (this.rating === 1 ? "star" : "stars");
       return `${this.rating} ${indicator()}`;
     },
+    formattedTitle() {
+      if (this.cityOfResidence) {
+        return `${this.trip.country} (${this.trip.cityOfResidence})`;
+      } else {
+        return this.trip.country;
+      }
+    }
   },
   methods: {
     increment() {
@@ -48,10 +56,7 @@ export default {
         this.rating--;
       }
     },
-  },
-  mounted() {
-    this.rating = this.trip.rating;
-  },
+  }
 };
 </script>
 

@@ -5,6 +5,7 @@
       <b-navbar-nav>
         <b-nav-item :to="'/my-trips'">My trips</b-nav-item>
         <b-nav-item :to="'/add-trip'">Add trip</b-nav-item>
+        <b-nav-item :to="'/cities-weather'">Weather</b-nav-item>
       </b-navbar-nav>
     </b-navbar>
   </div>

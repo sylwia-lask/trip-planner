@@ -6,16 +6,21 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import SiteHeader from "./components/SiteHeader";
+import { myTrips } from "./data";
 
 export default {
   name: "App",
   components: {
-    SiteHeader
+    SiteHeader,
   },
-  data: () => ({
-    countries: []
-  })
+  methods: {
+    ...mapMutations(["loadTrips"]),
+  },
+  mounted() {
+    this.loadTrips(myTrips);
+  },
 };
 </script>
 

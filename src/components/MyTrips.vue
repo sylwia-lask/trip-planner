@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations, mapActions } from "vuex";
 
-import { myTrips } from "../data";
+
 import SingleTrip from "./SingleTrip";
 import CountryPin from "./CountryPin";
 
@@ -32,13 +32,15 @@ export default {
   name: "MyTrips",
   components: { SingleTrip, CountryPin },
   methods: {
-    ...mapMutations(["addToSelectedTrips", "deleteSelectedTrips"])
+    ...mapMutations(["addToSelectedTrips", "deleteSelectedTrips", "loadTrips"]),
+    ...mapActions(['fetchCityWeather'])
   },
   computed: {
     ...mapGetters(["trips", "selectedTrips"]),
   },
-  mounted() {
-    this.$store.commit("loadTrips", myTrips);
+  async mounted() {
+    
+    this.fetchCityWeather('Athens');
   },
 };
 </script>

@@ -1,5 +1,6 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
+import {getCityId, getCityWeather} from './service';
 
 Vue.use(Vuex);
 
@@ -7,6 +8,13 @@ const store = new Vuex.Store({
     state: {
         trips: [],
         selectedTrips: []
+    },
+    actions: {
+        async fetchCityWeather({commit}, trip) {
+            const fetchedCity = await getCityId(trip.cityOfResidence);
+            let weather = await getCityWeather(fetchedCity[0].woeid);
+            commit('addWeather', {weather, trip});
+        }
     },
     mutations: {
         loadTrips(state, trips) {
@@ -28,11 +36,16 @@ const store = new Vuex.Store({
         },
         addTrip(state, trip) {
             state.trips.push(trip);
+        },
+        addWeather(state, payload) {
+            state.trips[payload.trip.id - 1].weather = payload.weather;
+            console.log(state.trips[payload.trip.id -1])
         }
     },
     getters: {
         trips: (state) => state.trips,
-        selectedTrips: (state) => state.selectedTrips
+        selectedTrips: (state) => state.selectedTrips,
+        tripsWithCities: (state) => state.trips.filter(trip => 'cityOfResidence' in trip)
     }
 });
 
